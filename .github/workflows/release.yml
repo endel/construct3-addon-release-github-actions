@@ -30,6 +30,7 @@ jobs:
       with:
         file-name: singleGlobalPlugin/addon.json
         diff-search: true
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Generate .c3addon file for upload
       if: steps.check.outputs.changed == 'true'
