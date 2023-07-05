@@ -1,0 +1,54 @@
+name: Publish & Release
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  npm-publish:
+    name: npm-publish
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Generate .c3addon file for upload
+      run: npx c3addon pack --root singleGlobalPlugin
+
+    - id: check
+      uses: EndBug/version-check@v2
+      with:
+        file-name: singleGlobalPlugin/addon.json
+        diff-search: true
+
+    - name: Release
+      if: steps.check.outputs.changed == 'true'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.check.outputs.version }}
+        prerelease: false
+        files: MyCompany_SingleGlobal.c3addon
+
+    - name: Release
+      if: steps.check.outputs.changed == 'true'
+      uses: endel/construct3-addon-release-github-actions@main
+      with:
+        addon-url: https://www.construct.net/en/make-games/addons/1057/testing-auto-release/
+        upload-file: MyCompany_SingleGlobal.c3addon
+        version: ${{ steps.check.outputs.version }}
+        release-notes: Released via GitHub Actions
+
+
