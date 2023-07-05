@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  npm-publish:
-    name: npm-publish
+  publish-addon:
+    name: Release & Publish
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -46,9 +46,12 @@ jobs:
       if: steps.check.outputs.changed == 'true'
       uses: endel/construct3-addon-release-github-actions@main
       with:
+        # Use "secrets" from repository settings page
+        auth-user: ${{ secrets.C3_AUTH_USER }}
+        auth-password: ${{ secrets.C3_AUTH_PASSWORD }}
+
+        # Addon URL and file to upload
         addon-url: https://www.construct.net/en/make-games/addons/1057/testing-auto-release/
         upload-file: MyCompany_SingleGlobal.c3addon
         version: ${{ steps.check.outputs.version }}
         release-notes: Released via GitHub Actions
-
-
