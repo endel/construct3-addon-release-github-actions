@@ -25,14 +25,15 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Generate .c3addon file for upload
-      run: npx c3addon pack --root singleGlobalPlugin
-
     - id: check
       uses: EndBug/version-check@v2
       with:
         file-name: singleGlobalPlugin/addon.json
         diff-search: true
+
+    - name: Generate .c3addon file for upload
+      if: steps.check.outputs.changed == 'true'
+      run: npx c3addon pack --root singleGlobalPlugin
 
     - name: Release
       if: steps.check.outputs.changed == 'true'
