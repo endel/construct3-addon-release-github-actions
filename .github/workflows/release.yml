@@ -26,7 +26,7 @@ jobs:
       run: npm install
 
     - id: check
-      uses: EndBug/version-check@v1
+      uses: EndBug/version-check@v2
       with:
         file-name: singleGlobalPlugin/addon.json
         diff-search: true
