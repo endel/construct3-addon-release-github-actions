@@ -48,14 +48,11 @@ jobs:
 
     - name: Release
       if: steps.check.outputs.changed == 'true'
-      run: 'c3addon publish'
-      with:
-        # Use "secrets" from repository settings page
-        auth-user: ${{ secrets.C3_AUTH_USER }}
-        auth-password: ${{ secrets.C3_AUTH_PASSWORD }}
-
-        # Addon URL and file to upload
-        addon-url: https://www.construct.net/en/make-games/addons/1057/testing-auto-release/
-        upload-file: MyCompany_SingleGlobal.c3addon
-        version: ${{ steps.check.outputs.version }}
-        release-notes: Released via GitHub Actions
+      run: |
+        c3addon publish \
+          --addonUrl 'https://www.construct.net/en/make-games/addons/1057/testing-auto-release' \
+          --authUser ${{ secrets.C3_AUTH_USER }} \
+          --authPassword ${{ secrets.C3_AUTH_PASSWORD }} \
+          --uploadFile MyCompany_SingleGlobal.c3addon \
+          --version ${{ steps.check.outputs.version }} \
+          --releaseNotes 'Released via GitHub Actions'
