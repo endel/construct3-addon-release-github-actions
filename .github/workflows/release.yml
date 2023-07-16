@@ -23,7 +23,9 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
 
     - name: Install dependencies
-      run: npm install
+      run: |
+        npm install
+        npm install -g c3addon
 
     - id: check
       uses: EndBug/version-check@v1
@@ -46,7 +48,7 @@ jobs:
 
     - name: Release
       if: steps.check.outputs.changed == 'true'
-      uses: endel/construct3-addon-release-github-actions@main
+      run: 'c3addon publish'
       with:
         # Use "secrets" from repository settings page
         auth-user: ${{ secrets.C3_AUTH_USER }}
