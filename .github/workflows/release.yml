@@ -35,7 +35,7 @@ jobs:
 
     - name: Generate .c3addon file for upload
       if: steps.check.outputs.changed == 'true'
-      run: c3addon pack --root singleGlobalPlugin
+      run: c3addon pack singleGlobalPlugin
 
     - name: Release
       if: steps.check.outputs.changed == 'true'
