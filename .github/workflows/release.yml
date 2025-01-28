@@ -37,15 +37,7 @@ jobs:
       if: steps.check.outputs.changed == 'true'
       run: c3addon pack singleGlobalPlugin
 
-    - name: Release
-      if: steps.check.outputs.changed == 'true'
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: ${{ steps.check.outputs.version }}
-        prerelease: false
-        files: MyCompany_SingleGlobal.c3addon
-
-    - name: Release
+    - name: Publish Addon
       if: steps.check.outputs.changed == 'true'
       run: |
         c3addon publish MyCompany_SingleGlobal.c3addon \
@@ -53,3 +45,11 @@ jobs:
           --username ${{ secrets.C3_AUTH_USER }} \
           --password ${{ secrets.C3_AUTH_PASSWORD }} \
           --release-notes 'Released via GitHub Actions'
+
+    - name: Release on GitHub
+      if: steps.check.outputs.changed == 'true'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.check.outputs.version }}
+        prerelease: false
+        files: MyCompany_SingleGlobal.c3addon

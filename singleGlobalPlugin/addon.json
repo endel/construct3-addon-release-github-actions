@@ -3,7 +3,7 @@
   "type": "plugin",
   "name": "My custom plugin",
   "id": "MyCompany_SingleGlobal",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "author": "Scirra",
   "website": "https://www.construct.net",
   "documentation": "https://www.construct.net",
