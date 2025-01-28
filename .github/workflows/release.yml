@@ -49,7 +49,7 @@ jobs:
       if: steps.check.outputs.changed == 'true'
       run: |
         c3addon publish MyCompany_SingleGlobal.c3addon \
-          --addonUrl 'https://www.construct.net/en/make-games/addons/1057/testing-auto-release' \
+          --addon-url 'https://www.construct.net/en/make-games/addons/1057/testing-auto-release' \
           --username ${{ secrets.C3_AUTH_USER }} \
           --password ${{ secrets.C3_AUTH_PASSWORD }} \
-          --releaseNotes 'Released via GitHub Actions'
+          --release-notes 'Released via GitHub Actions'
